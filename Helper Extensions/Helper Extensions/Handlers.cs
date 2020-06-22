@@ -196,7 +196,6 @@ namespace Helper_Extensions
             GrammarBuilder builder = new GrammarBuilder(helperModule.instance.activationWord);
             Choices commandWords = new Choices(commandPhrases);
             builder.Append(new SemanticResultKey("cmd", commandWords));
-            Choices numbers = new Choices(" ", "");
 
             Grammar cmd = new Grammar(builder);
             cmd.Name = "warcrimes";
@@ -222,7 +221,6 @@ namespace Helper_Extensions
             GrammarBuilder builder = new GrammarBuilder(helperModule.instance.activationWord);
             Choices commandWords = new Choices(commandPhrases);
             builder.Append(new SemanticResultKey("cmd", commandWords));
-            Choices numbers = new Choices(" ", "");
 
             Grammar cmd = new Grammar(builder);
             cmd.Name = "genivaconvention";
@@ -234,7 +232,7 @@ namespace Helper_Extensions
             base.doCommand(speechResult);
             foreach (Creature c in Creature.list)
             {
-                if (c != Creature.player) c.health.Resurrect();
+                if (c != Creature.player) c.health.Resurrect(100, c);
             }
         }
     }
