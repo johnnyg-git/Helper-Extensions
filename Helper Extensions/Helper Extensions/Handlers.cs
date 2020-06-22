@@ -36,8 +36,9 @@ namespace Helper_Extensions
             randomTorqueArray[2] = new Vector3(UnityEngine.Random.Range(-randomTorqueRange.x, randomTorqueRange.x), UnityEngine.Random.Range(-randomTorqueRange.y, randomTorqueRange.y), UnityEngine.Random.Range(-randomTorqueRange.z, randomTorqueRange.z));
             randomTorqueArray[3] = new Vector3(UnityEngine.Random.Range(-randomTorqueRange.x, randomTorqueRange.x), UnityEngine.Random.Range(-randomTorqueRange.y, randomTorqueRange.y), UnityEngine.Random.Range(-randomTorqueRange.z, randomTorqueRange.z));
             randomTorqueArray[4] = new Vector3(UnityEngine.Random.Range(-randomTorqueRange.x, randomTorqueRange.x), UnityEngine.Random.Range(-randomTorqueRange.y, randomTorqueRange.y), UnityEngine.Random.Range(-randomTorqueRange.z, randomTorqueRange.z));
-
+            bubbleActive = true;
             EffectInstance bubbleEffect = null;
+            StopCapture();
             if (bubbleEffectData != null)
             {
                 bubbleEffect = bubbleEffectData.Spawn(Creature.player.transform.position, Quaternion.identity);
@@ -45,6 +46,7 @@ namespace Helper_Extensions
                 bubbleEffect.Play(0);
             }
             yield return new WaitForFixedUpdate();
+            StartCapture(0f);
             float startTime = Time.time;
             while (Time.time - startTime < duration)
             {
@@ -60,6 +62,8 @@ namespace Helper_Extensions
             {
                 bubbleEffect.End(false, -1f);
             }
+            StopCapture();
+            bubbleActive = false;
             yield break;
         }
 
