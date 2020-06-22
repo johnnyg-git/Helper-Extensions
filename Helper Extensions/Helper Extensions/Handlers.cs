@@ -187,6 +187,32 @@ namespace Helper_Extensions
         }
     }
 
+    class WarCrimes : commandHandler
+    {
+        public override void setupGrammar(SpeechRecognitionEngine recognitionEngine)
+        {
+            base.setupGrammar(recognitionEngine);
+
+            GrammarBuilder builder = new GrammarBuilder(helperModule.instance.activationWord);
+            Choices commandWords = new Choices(commandPhrases);
+            builder.Append(new SemanticResultKey("cmd", commandWords));
+            Choices numbers = new Choices(" ", "");
+
+            Grammar cmd = new Grammar(builder);
+            cmd.Name = "warcrimes";
+            recognitionEngine.LoadGrammar(cmd);
+        }
+
+        public override void doCommand(RecognitionResult speechResult)
+        {
+            base.doCommand(speechResult);
+            foreach(Creature c in Creature.list)
+            {
+                if (c != Creature.player) c.health.Kill();
+            }
+        }
+    }
+
     class Electrocution : commandHandler
     {
         public override void setupGrammar(SpeechRecognitionEngine recognitionEngine)
